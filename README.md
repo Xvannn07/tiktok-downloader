@@ -29,7 +29,7 @@ TikTok Downloader is a web application that allows you to download TikTok videos
 
 1. Start the server:
     ```sh
-    npm test
+    npm start
     ```
 2. Open your web browser and go to `http://localhost:3000`.
 
