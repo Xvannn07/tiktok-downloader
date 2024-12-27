@@ -2,7 +2,7 @@
   "name": "tiktok-downloader",
   "version": "1.0.0",
   "description": "tiktok downloader",
-  "main": "script.js",
+  "main": "app.js",
   "scripts": {
     "test": "node app.js"
   },
