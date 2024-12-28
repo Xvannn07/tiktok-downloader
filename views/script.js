@@ -55,7 +55,10 @@ downloadForm.addEventListener('submit', async (event) => {
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ url, hash: encryptedUrl }),
-            dataType: 'json'
+            dataType: 'json',
+            headers: {
+                'x-apikey': await generateApikey()
+            }
         });
 
         if (response.data.images) {
@@ -161,4 +164,12 @@ function formatViews(views) {
     const unitIndex = Math.floor((views.toString().length - 1) / 3);
     const shortNumber = (views / Math.pow(1000, unitIndex)).toFixed(1);
     return shortNumber + units[unitIndex - 1];
+}
+
+// generate apikey
+function generateApikey() {
+  const secretKey = 'xvannn07-secret';
+  const currentMinute = new Date().getUTCMinutes();
+  const apikeyS = CryptoJS.HmacSHA256(currentMinute.toString(), secretKey).toString(CryptoJS.enc.Hex);
+  return apikeyS
 }
