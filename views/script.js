@@ -152,7 +152,7 @@ function showAlert(message, type) {
 function encryptURL(url) {
     // Enkripsi URL menggunakan AES
     const date_minute = new Date().getMinutes();
-    const secretKey = "xvannn07-secret";
+    const secretKey = process.env.secretKey || 'xvannn07-secret';
     const encrypted = CryptoJS.AES.encrypt(`${url}-abc:${date_minute}`, secretKey).toString();
     return encodeURIComponent(encrypted); // Encode agar aman untuk URL
 }
@@ -168,7 +168,7 @@ function formatViews(views) {
 
 // generate apikey
 function generateApikey() {
-  const secretKey = 'xvannn07-secret';
+  const secretKey = process.env.secretKey || 'xvannn07-secret';
   const currentMinute = new Date().getUTCMinutes();
   const apikeyS = CryptoJS.HmacSHA256(currentMinute.toString(), secretKey).toString(CryptoJS.enc.Hex);
   return apikeyS
