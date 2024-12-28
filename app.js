@@ -39,7 +39,7 @@ function decryptURL(encryptedURL) {
 }
 
 
-app.post('/api/uplink', async apiKeyMiddleware, (req, res) => {
+app.post('/api/uplink', async (req, res) => {
     const { url, hash } = req.body;
     if (!hash) {
         return res.status(400).json({ msg: 'No text provided' });
