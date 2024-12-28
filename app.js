@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.json());
 
 const apiKeyMiddleware = (req, res, next) => {
-  const apiKey = req.headers['apikey']; // get Api Key From header
+  const apiKey = req.headers['x-key-xvannn']; // get Api Key From header
   const validApiKey = generateApiKey(); // Generate API key with time
 
   if (apiKey && apiKey === validApiKey) {
