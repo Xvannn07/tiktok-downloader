@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.json());
 
 const apiKeyMiddleware = (req, res, next) => {
-  const apiKey = req.headers['x-apikey'];
+  const apiKey = req.headers['X-apikey'];
   const currentMinute = new Date().getUTCMinutes();
 
   // Generate API key untuk menit sekarang dan sebelumnya
