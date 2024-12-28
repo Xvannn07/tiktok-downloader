@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.json());
 
 const apiKeyMiddleware = (req, res, next) => {
-  const apiKey = req.headers['apikey'];
+  const apiKey = req.headers['x-apikey'];
   const currentMinute = new Date().getUTCMinutes();
 
   // Generate API key untuk menit sekarang dan sebelumnya
@@ -39,7 +39,7 @@ function decryptURL(encryptedURL) {
 }
 
 
-app.post('/api/uplink', async (req, res) => {
+app.post('/api/uplink', apiKeyMiddleware, async (req, res) => {
     const { url, hash } = req.body;
     if (!hash) {
         return res.status(400).json({ msg: 'No text provided' });
