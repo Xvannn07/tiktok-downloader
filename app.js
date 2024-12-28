@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const CryptoJS = require('crypto-js');
 const axios = require('axios');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -10,6 +11,7 @@ const secretKey = process.env.secretKey || 'xvannn07-secret';
 // Middleware
 app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.json());
+app.use(cors());
 
 const apiKeyMiddleware = (req, res, next) => {
   const apiKey = req.headers['X-apikey'];
