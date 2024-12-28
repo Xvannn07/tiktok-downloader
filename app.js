@@ -12,15 +12,22 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.json());
 
 const apiKeyMiddleware = (req, res, next) => {
-  const apiKey = req.headers['x-key-xvannn']; // get Api Key From header
-  const validApiKey = generateApiKey(); // Generate API key with time
+  const apiKey = req.headers['apikey'];
+  const currentMinute = new Date().getUTCMinutes();
 
-  if (apiKey && apiKey === validApiKey) {
-    next(); 
+  // Generate API key untuk menit sekarang dan sebelumnya
+  const validKeys = [
+    CryptoJS.HmacSHA256(currentMinute.toString(), secretKey).toString(CryptoJS.enc.Hex),
+    CryptoJS.HmacSHA256((currentMinute - 1).toString(), secretKey).toString(CryptoJS.enc.Hex)
+  ];
+
+  if (apiKey && validKeys.includes(apiKey)) {
+    next();
   } else {
-    res.status(403).json({ error: 'Forbidden: Invalid API Key' }); 
+    res.status(403).json({ error: 'Forbidden: Invalid API Key' });
   }
 };
+
 
 // Fungsi untuk mendekripsi URL
 function decryptURL(encryptedURL) {
@@ -32,7 +39,7 @@ function decryptURL(encryptedURL) {
 }
 
 
-app.post('/api/uplink', async (req, res) => {
+app.post('/api/uplink', async apiKeyMiddleware, (req, res) => {
     const { url, hash } = req.body;
     if (!hash) {
         return res.status(400).json({ msg: 'No text provided' });
