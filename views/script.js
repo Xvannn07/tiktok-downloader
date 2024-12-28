@@ -57,7 +57,7 @@ downloadForm.addEventListener('submit', async (event) => {
             data: JSON.stringify({ url, hash: encryptedUrl }),
             dataType: 'json',
             headers: {
-                'x-apikey': await generateApikey()
+                'X-apikey': await (await generateApikey())
             }
         });
 
