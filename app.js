@@ -5,7 +5,7 @@ const axios = require('axios');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const secretKey = 'xvannn07-secret';
+const secretKey = process.env.secretKey || 'xvannn07-secret';
 
 // Middleware
 app.use(express.static(path.join(__dirname, 'views')));
