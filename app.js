@@ -52,7 +52,11 @@ app.post('/api/uplink', apiKeyMiddleware, async (req, res) => {
         console.log('Decrypted text:', decryptedText);
 
         // if decrypted text is not the same as the URL
-        if(decryptedText !== `${url}-abc:${date_minute}`) {
+        const validHashes = [
+          `${url}-abc:${dateMinute}`,
+          `${url}-abc:${dateMinute - 1}`
+        ];
+        if(!validHashes.includes(decryptedText)) {
             return res.status(400).json({ msg: 'Invalid hash!!' });
         }
         const response = await axios({
