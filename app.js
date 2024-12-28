@@ -11,6 +11,17 @@ const secretKey = 'xvannn07-secret';
 app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.json());
 
+const apiKeyMiddleware = (req, res, next) => {
+  const apiKey = req.headers['apikey']; // get Api Key From header
+  const validApiKey = generateApiKey(); // Generate API key with time
+
+  if (apiKey && apiKey === validApiKey) {
+    next(); 
+  } else {
+    res.status(403).json({ error: 'Forbidden: Invalid API Key' }); 
+  }
+};
+
 // Fungsi untuk mendekripsi URL
 function decryptURL(encryptedURL) {
     // Decode terlebih dahulu
