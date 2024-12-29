@@ -14,7 +14,10 @@ app.use(express.json());
 app.use(cors());
 
 const apiKeyMiddleware = (req, res, next) => {
-  const apiKey = req.headers['X-apikey'];
+  const apiKey = req.get('X-apikey');
+  if(!apiKey) {
+    res.status(403).json({ error: 'Forbidden: Input The API Key' });
+  }
   const currentMinute = new Date().getUTCMinutes();
 
   // Generate API key untuk menit sekarang dan sebelumnya
@@ -55,8 +58,8 @@ app.post('/api/uplink', apiKeyMiddleware, async (req, res) => {
 
         // if decrypted text is not the same as the URL
         const validHashes = [
-          `${url}-abc:${dateMinute}`,
-          `${url}-abc:${dateMinute - 1}`
+          `${url}-abc:${date_minute}`,
+          `${url}-abc:${date_minute - 1}`
         ];
         if(!validHashes.includes(decryptedText)) {
             return res.status(400).json({ msg: 'Invalid hash!!' });
