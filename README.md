@@ -5,7 +5,7 @@
 TikTok Downloader is a web application that allows you to download TikTok videos or images without a watermark in high quality.
 
 ## Demo
-[Link Preview][https://tiktok.xvannn.xyz]
+[Link Preview](https://tiktok.xvannn.xyz)
 
 ## Features
 
